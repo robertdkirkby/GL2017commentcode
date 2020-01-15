@@ -1,85 +1,6 @@
 %% Comment on Guerrieri & Lorenzoni (2017) - Credit Crises, Precautionary Savings, and the Liquidity Trap
 %
-% Guerrieri & Lorenzoni (2017) use a value of 2.1 for Tauchen's q (the
-% hyperparameter) for the Tauchen method to approximate an AR(1) process on
-% (the log of) efficiency-units-of-labour. This value of 2.1 is not mentioned
-% anywhere in the paper or technical appendix despite being highly unusual
-% in the literature; the Tauchen method is widely used, and typical values
-% of Tauchen's q are 3 or 4.
-%
-% Nor is the choice of Tauchens q 2.1 directly mentioned in the codes provided by
-% Guerrieri & Lorenzoni (2017) where a file (inc_process.mat) containing 
-% the result of the Tauchen method approximation is instead provided.
-% I discovered the value of 2.1 by reverse engineering to find the Tauchen
-% q that produces (a close approximation of) the contents inc_process.mat.
-%
-% This is despite the crucial role played by the choice of Tauchen q=2.1.
-% The rest of this comment simply creates a plot showing the stationary distribution
-% of agents in general equilibrium for the Tauchen approximation based on the saved values 
-% of GL2017 (inc_process.mat), and for Tauchen q=2.1, q=3, and q=4. It also
-% shows an 'accurate' stationary distribution, which not only uses Tauchen
-% q=4 but also increases the number of points used for the approximation (n_theta) to 51, rather than 
-% the 13 used elsewhere; this illustrates what the stationary distribution
-% 'should' look like if it were actually the AR(1), rather than the product
-% of the Tauchen method approximation.
-% A saved copy of the plot is available directly at: WEBLINK
-%
-% The reason this choice matters is that with q=2.1 the highest and lowest values of the (log of the)
-% process on efficiency-units-of-labour is only +/-1 standard deviation. Making
-% income volatility much lower than is empirically plausible. With so
-% little income risk a large fraction of the population ends up very close
-% to the borrowing constraint ---despite precautionary savings motives to
-% move away from it--- and so the credit crisis forces savings increases on
-% a substantial fraction of the population. With a more normal value of Tauchen q like 3, and more in
-% line with the empirical estimates of the (log) income process to which
-% the model is being calibrated, only a tiny fraction of the population
-% would run the risk of being so close to their borrowing constraint and so
-% the credit crisis will affect far fewer people and be relatively benign.
-% Note that you can see this indirectly in Huggett (1993) Figure 2, showing
-% the stationary distribution (or in the figure created by these codes);
-% the decision to model labour supply introducing the alternative option of precautionary
-% labour supply (instead of precautionary savings (Pijoan-Mas, 2006)), also helps the model deliver this 
-% higher fraction of the population near the borrowing constraint.
-% In fact, with Tauchen q=3 the zero lower bound would never have bound in
-% the model and the 'New Keynesian' results would be identical to the
-% 'flexible price' results (if you want to see this run the 'Example' codes with tauchen q=3).
-%
-% It is possible to justify the choice of q=2.1 as that which, when using
-% a 12-state approximation with the Tauchen method delivers the a Markov
-% process that has the same variance as the variance of the AR(1) process
-% being approximated. (That is, reproduces variance(z) for z_t=rho*z_tminus1+epsilon.)
-% But as described above this has the impact of removing most of the risk
-% from the economy and is both an unusually low value for Tauchens q and
-% key to the results of the paper. It is so unusual that it took me
-% a few days to realise why I was initially completely unable to
-% replicate the paper at the first attempt (I had gone with q=3, which
-% tends to be the standard if not otherwise mentioned, and while I tried q=4 
-% the thought of something as low as q=2 simply did not occour to me based on my 
-% experience replicating many models of this kind.)
-%
-% The point of this comment is not so much to criticise the decision to set
-% Tauchen q equal to 2.1; there are possible justifications such as that
-% above about variance, or about wanting to calibrate to have a substantial fraction
-% of the population near the borrowing constraint (empirically assessing
-% the correct value for this fraction is very difficult).
-%
-% The point of this comment is that such a crucial and unusual decision was taken
-% without mention or discussion in the paper. It is likely that neither the
-% editor, referees, nor authors comprehended what was going on with Tauchen q as they have kept
-% a robustness test for a 'high risk aversion (phi=6)' calibration in the
-% paper as an important test. This is rendered pointless by Tauchen q equal
-% to 2.1: what is the point of testing robustness to high risk aversion in an economy in
-% which most of the risk has been removed??? 
-% (The authors actually got the process from Shimer (2005) who in turn likely used the Tauchen-Hussey method, 
-% rather than the Tauchen method. You should never use the Tauchen-Hussey method. It is a dreadful 
-% approximation and plenty of good alternatives exist (Tauchen, Rouwenquist, Farmer-Toda, etc. For just 
-% how bad Tauchen-Hussey is, see Toda (2020))
-%
-% PS. Other than this one issue the paper was actually a pleasure to replicate compared to
-% most. It provides clear and precise descriptions of the experiments being undertaken, reports
-% alternative calibrations, and the code (while only reproducing part of the paper) is clean and 
-% well documented and calibrated. The paper itself is also a good and insightful read into how these
-% models operate :)
+% Code that generates some graphs and similar underlying: http://www.vfitoolkit.com/comment-on-guerrieri-lorenzoni-2017/
 % 
 % Note: for this to run you need to download 'inc_process.mat' (is
 % contained in codes provided by GL2017), you also need to edit line
@@ -89,8 +10,7 @@
 %
 % Note: The following code is lazily done as it is not really meant to be
 % followed and read (that is purpose of the 'Example' and 'Replication' codes
-% linked at WEBSITE ). It is just to produce the Figure illustrating the point of this comment
-% and found at .
+% linked to from http://www.vfitoolkit.com/updates-blog/2020/transition-paths-example-based-on-guerrieri-lorenzoni-2017/). 
 
 %% To translate Guerrieri & Lorenzoni (2017) into the standard setup of VFI Toolkit I use following:
 % d variables: n_it
